@@ -3,12 +3,14 @@ package cleanCode;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Board extends JPanel{
+
+public class Board2 extends JPanel{
 
 
     final int BoardWidth = 10;
@@ -27,7 +29,7 @@ public class Board extends JPanel{
 
 
 
-    public Board(JLabel statusbar) {
+    public Board2(JLabel statusbar) {
 
        setFocusable(true);
        curPiece =Shape.makeRandom();
@@ -239,96 +241,3 @@ public class Board extends JPanel{
                          x + squareWidth() - 1, y + 1);
     }
 }
-//implements View {
-//	final int BoardWidth = 10;
-//	final int BoardHeight = 22;
-//	Timer timer;
-//	int curX = 0;
-//	int curY = 0;
-//	JLabel statusbar;
-//	Tetris tetris;
-//
-//	public Board(JLabel statusbar) {
-//		this.tetris = new Tetris(this);
-//		setFocusable(true);
-//		timer = new Timer(400, new TimeListener(tetris));
-//		timer.start();
-//
-//		addKeyListener(new Keyboard(tetris));
-//		this.statusbar = statusbar;
-//	}
-//
-//	@Override
-//	public void update() {
-//		repaint();
-//	}
-//
-//	@Override
-//	public void updateStatus(String newStatus) {
-//		statusbar.setText(newStatus);
-//	}
-//
-//	@Override
-//	public void notifyGameOver() {
-//		timer.stop();
-//		statusbar.setText("Game Over");
-//	}
-//
-//	public void start() {
-//		timer.start();
-//	}
-//
-//	public void pause() {
-//		timer.stop();
-//		statusbar.setText("paused");
-//		repaint();
-//	}
-//	
-//	int squareWidth() {
-//		return (int) getSize().getWidth() / BoardWidth;
-//	}
-//	
-//	int squareHeight() {
-//		return (int) getSize().getHeight() / BoardHeight;
-//	}
-//
-//	public void paint(Graphics g) {
-//		super.paint(g);
-//
-//		Dimension size = getSize();
-//		int boardTop = (int) size.getHeight() - BoardHeight * squareHeight();
-//
-//		for (int i = 0; i < BoardHeight; ++i) {
-//			for (int j = 0; j < BoardWidth; ++j) {
-//				Shape shape = tetris.shapeAt(j, BoardHeight - i - 1);
-//				if (shape != null)
-//					drawShape(g, 0 + j * squareWidth(), boardTop + i * squareHeight(), shape);
-//			}
-//		}
-//
-//		if (tetris.curPiece != null) {
-//			for (int i = 0; i < 4; ++i) {
-//				int x = curX + tetris.curPiece.x(i);
-//				int y = curY - tetris.curPiece.y(i);
-//				drawShape(g, 0 + x * squareWidth(), boardTop + (BoardHeight - y - 1) * squareHeight(), tetris.curPiece);
-//			}
-//		}
-//	}
-//
-//	private void drawShape(Graphics g, int x, int y, Shape shape) {
-//		int[] rgb = shape.getRgb();
-//		Color color = new Color(rgb[0], rgb[1], rgb[2]);
-//
-//		g.setColor(color);
-//		g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
-//
-//		g.setColor(color.brighter());
-//		g.drawLine(x, y + squareHeight() - 1, x, y);
-//		g.drawLine(x, y, x + squareWidth() - 1, y);
-//
-//		g.setColor(color.darker());
-//		g.drawLine(x + 1, y + squareHeight() - 1, x + squareWidth() - 1, y + squareHeight() - 1);
-//		g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1, x + squareWidth() - 1, y + 1);
-//	}
-//
-//}

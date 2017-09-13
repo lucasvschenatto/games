@@ -1,9 +1,9 @@
-package cleanCode;
+package badCode;
 
 public class Main {
     public static void main(String[] args) {
 
-        Game game = new Game();
+        Tetris game = new Tetris();
         game.setLocationRelativeTo(null);
         game.setVisible(true);
 
