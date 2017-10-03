@@ -24,7 +24,7 @@ public final class Sokoban extends JFrame {
 
 
     public static void main(String[] args) {
-        Sokoban bad.sokoban = new Sokoban();
-        bad.sokoban.setVisible(true);
+        Sokoban sokoban = new Sokoban();
+        sokoban.setVisible(true);
     }
 }
