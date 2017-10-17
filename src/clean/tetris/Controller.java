@@ -1,6 +1,6 @@
 package clean.tetris;
 
-import clean.tetris.shapes.Shape;
+import clean.tetris.tetromino.Tetromino;
 
 public class Controller {
 	private int width = 10;
@@ -12,16 +12,16 @@ public class Controller {
 	int numLinesRemoved = 0;
 	int curX = 0;
 	int curY = 0;
-	Shape curPiece;
-	Shape[][] board;
+	Tetromino curPiece;
+	Tetromino[][] board;
 	String[][] stringBoard;
 	private View view;
 
 	public Controller(View view) {
 
 		this.view = view;
-		curPiece = Shape.makeRandom();
-		board = new Shape[getWidth()][getHeight()];
+		curPiece = Tetromino.makeRandom();
+		board = new Tetromino[getWidth()][getHeight()];
 		stringBoard = new String[getWidth()][getHeight()];
 	}
 
@@ -34,7 +34,7 @@ public class Controller {
 		}
 	}
 
-	Shape shapeAt(int x, int y) {
+	Tetromino shapeAt(int x, int y) {
 		return board[x][y];
 	}
 
@@ -82,7 +82,7 @@ public class Controller {
 		pieceDropped();
 	}
 
-	boolean canMove(Shape newPiece, int xTo, int yTo) {
+	boolean canMove(Tetromino newPiece, int xTo, int yTo) {
 //		for (int i = 0; i < 4; ++i) {
 //			int x = xTo + newPiece.x(i);
 //			if (x < 0 || x > getWidth() - 1)
@@ -99,7 +99,7 @@ public class Controller {
 		return true;
 	}
 
-	void move(Shape newPiece, int xTo, int yTo) {
+	void move(Tetromino newPiece, int xTo, int yTo) {
 		curPiece = newPiece;
 		curX = xTo;
 		curY = yTo;
@@ -121,7 +121,7 @@ public class Controller {
 	}
 
 	private void newPiece() {
-		curPiece = Shape.makeRandom();
+		curPiece = Tetromino.makeRandom();
 		curX = getWidth() / 2;
 //		curY = getHeight() - 1 + curPiece.minY();
 		curY = 0;
@@ -141,7 +141,7 @@ public class Controller {
 			boolean lineIsFull = true;
 
 			for (int j = 0; j < getWidth(); ++j) {
-				Shape sat = shapeAt(j, i);
+				Tetromino sat = shapeAt(j, i);
 				if (sat == null) {
 					lineIsFull = false;
 					break;

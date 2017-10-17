@@ -3,8 +3,8 @@ package clean.tetris;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import clean.tetris.shapes.NullShape;
-import clean.tetris.shapes.Shape;
+import clean.tetris.tetromino.NullShape;
+import clean.tetris.tetromino.Tetromino;
 
 class Keyboard extends KeyAdapter {
 	private final Controller controller;

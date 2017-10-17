@@ -3,18 +3,18 @@ package clean.tetris;
 import java.util.ArrayList;
 import java.util.List;
 
-import static clean.tetris.Context.Code.EMPTY;
+import clean.tetris.tetromino.Tetromino;
 
-import clean.tetris.shapes.Shape;
+import static clean.tetris.Context.Code.EMPTY;
 
 public class Board {
 	private ArrayList<String> grid;
-	private Shape current;
+	private Tetromino current;
 	private int currentY;
 	private static int MIDDLE_X = 5;
 	
 	public Board() {
-		current = Shape.getNullShape();
+		current = Tetromino.getNullShape();
 		grid = new ArrayList<String>();
 		for (int i = 0; i < 22; i++) {
 			String line = makeEmptyLine();
@@ -35,23 +35,27 @@ public class Board {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<String> overlapShapeOnGrid() {
-		List<String> newGrid = (List<String>) grid.clone();
+	private ArrayList<String> overlapShapeOnGrid() {
+		ArrayList<String> newGrid = (ArrayList<String>) grid.clone();
 		char letter = current.getCode();
 		for(int[] coordinate: current.getCoordinates()){
-			int currY = currentY + coordinate[1];
-			int currX = MIDDLE_X + coordinate[0];
-			String line = newGrid.get(currY);
-			String prefix = line.substring(0,currX);
-			String sufix = line.substring(currX + 1);
+			int lineIndex = getLineIndex(coordinate);
+			int charIndex = MIDDLE_X + coordinate[0];
+			String line = newGrid.get(lineIndex);
+			String prefix = line.substring(0,charIndex);
+			String sufix = line.substring(charIndex + 1);
 			String newLine = prefix.concat(String.valueOf(letter).concat(sufix));
-			newGrid.set(currY, newLine);
+			newGrid.set(lineIndex, newLine);
 		}
 		
 		return newGrid;
 	}
 
-	public Board add(Shape shape) {
+	private int getLineIndex(int[] coordinate) {
+		return currentY + coordinate[1];
+	}
+
+	public Board add(Tetromino shape) {
 		current = shape;
 		currentY = shape.initialYSlack();
 		return this;
@@ -59,6 +63,21 @@ public class Board {
 
 	public Board lineDown() {
 		currentY++;
+		return this;
+	}
+	
+	public boolean canMoveLineDown(){
+		for(int[] coordinate: current.getCoordinates())
+			if (getLineIndex(coordinate) >= grid.size() - 1)
+				return false;
+		return true;
+	}
+
+	public Board dropDown() {
+		while (canMoveLineDown())
+			lineDown();
+		this.grid = overlapShapeOnGrid();
+		this.current = Tetromino.getNullShape();
 		return this;
 	}
 

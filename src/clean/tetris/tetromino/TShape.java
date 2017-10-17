@@ -1,11 +1,11 @@
-package clean.tetris.shapes;
+package clean.tetris.tetromino;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import clean.tetris.Context;
 
-public class TShape extends Shape{
+public class TShape extends Tetromino{
 	public TShape(){
 		super(makeStates());
 	}  	

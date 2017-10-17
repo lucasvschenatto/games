@@ -1,15 +1,15 @@
-package clean.tetris.shapes;
+package clean.tetris.tetromino;
 
 import java.util.List;
 import java.util.Random;
 import java.lang.Math;
 
 
-public abstract class Shape {
+public abstract class Tetromino {
     private List<int[][]> states;
-    public Shape clone(){
+    public Tetromino clone(){
 			try {
-				Shape cloned;
+				Tetromino cloned;
 				cloned = this.getClass().newInstance();
 				cloned.states = deepCloneList(this.states);
 				return cloned;
@@ -40,10 +40,10 @@ public abstract class Shape {
 		}
 		return cloned;
 	}
-	public static Shape getNullShape(){
+	public static Tetromino getNullShape(){
     	return new NullShape();
     }
-    public static Shape makeRandom(){
+    public static Tetromino makeRandom(){
     	Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7;
         switch (x){
@@ -67,7 +67,7 @@ public abstract class Shape {
         }
     }
 
-    protected Shape( List<int[][]> states) {
+    protected Tetromino( List<int[][]> states) {
         this.states = states;
     }
     
@@ -77,16 +77,16 @@ public abstract class Shape {
     
     public abstract char getCode();
 
-    public Shape rotateLeft(){
-    	Shape rotated = this.clone();
+    public Tetromino rotateLeft(){
+    	Tetromino rotated = this.clone();
     	int[][] first = rotated.states.get(0);
     	rotated.states.remove(first);
     	rotated.states.add(first);
     	return rotated;
     };
 
-    public Shape rotateRight(){
-    	Shape rotated = this.clone();
+    public Tetromino rotateRight(){
+    	Tetromino rotated = this.clone();
     	int[][] last = rotated.states.get(rotated.states.size()-1);
     	List<int[][]> head = rotated.states.subList(0, rotated.states.size()-1);
     	rotated.states.clear();
