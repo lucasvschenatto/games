@@ -30,25 +30,35 @@ public class Board {
 	}
 
 	public List<String> asList() {
-		List<String> overlaped = overlapShapeOnGrid();
+		List<String> overlaped = overlapShapeOnClonedGrid();
 		return overlaped;
 	}
 
 	@SuppressWarnings("unchecked")
-	private ArrayList<String> overlapShapeOnGrid() {
-		ArrayList<String> newGrid = (ArrayList<String>) grid.clone();
+	private ArrayList<String> overlapShapeOnClonedGrid() {
+		ArrayList<String> cloned = (ArrayList<String>) grid.clone();
 		char letter = current.getCode();
-		for(int[] coordinate: current.getCoordinates()){
-			int lineIndex = getLineIndex(coordinate);
-			int charIndex = MIDDLE_X + coordinate[0];
-			String line = newGrid.get(lineIndex);
-			String prefix = line.substring(0,charIndex);
-			String sufix = line.substring(charIndex + 1);
-			String newLine = prefix.concat(String.valueOf(letter).concat(sufix));
-			newGrid.set(lineIndex, newLine);
-		}
+		for(int[] coordinate: current.getCoordinates())
+			overlapLetterOnGrid(cloned, letter, coordinate);
 		
-		return newGrid;
+		return cloned;
+	}
+
+	private void overlapLetterOnGrid(ArrayList<String> targetGrid, char letter, int[] coordinate) {
+		int lineIndex = getLineIndex(coordinate);
+		int charIndex = MIDDLE_X + coordinate[0];
+
+		String line = targetGrid.get(lineIndex);
+		String newLine = overlapLetterOnLine(letter, line, charIndex);
+		
+		targetGrid.set(lineIndex, newLine);
+	}
+
+	private String overlapLetterOnLine(char letter, String line, int charIndex) {
+		String prefix = line.substring(0,charIndex);
+		String sufix = line.substring(charIndex + 1);
+		
+		return prefix.concat(String.valueOf(letter).concat(sufix));
 	}
 
 	private int getLineIndex(int[] coordinate) {
@@ -76,7 +86,7 @@ public class Board {
 	public Board dropDown() {
 		while (canMoveLineDown())
 			lineDown();
-		this.grid = overlapShapeOnGrid();
+		this.grid = overlapShapeOnClonedGrid();
 		this.current = Tetromino.getNullShape();
 		return this;
 	}
