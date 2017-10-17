@@ -83,19 +83,19 @@ public class Controller {
 	}
 
 	boolean canMove(Shape newPiece, int xTo, int yTo) {
-		for (int i = 0; i < 4; ++i) {
-			int x = xTo + newPiece.x(i);
-			if (x < 0 || x > getWidth() - 1)
-				return false;
-	
-			int y = yTo - newPiece.y(i);
-			if (y < 0 || y > getHeight() - 1)
-				return false;
-	
-			Shape sat = shapeAt(x, y);
-			if (sat != null)
-				return false;
-		}
+//		for (int i = 0; i < 4; ++i) {
+//			int x = xTo + newPiece.x(i);
+//			if (x < 0 || x > getWidth() - 1)
+//				return false;
+//	
+//			int y = yTo - newPiece.y(i);
+//			if (y < 0 || y > getHeight() - 1)
+//				return false;
+//	
+//			Shape sat = shapeAt(x, y);
+//			if (sat != null)
+//				return false;
+//		}
 		return true;
 	}
 
@@ -108,16 +108,16 @@ public class Controller {
 	}
 
 	private void pieceDropped() {
-		for (int i = 0; i < 4; ++i) {
-			int x = curX + curPiece.x(i);
-			int y = curY - curPiece.y(i);
-			board[y][x] = curPiece;
-		}
-
-		removeFullLines();
-
-		if (!isFallingFinished)
-			newPiece();
+//		for (int i = 0; i < 4; ++i) {
+//			int x = curX + curPiece.x(i);
+//			int y = curY - curPiece.y(i);
+//			board[y][x] = curPiece;
+//		}
+//
+//		removeFullLines();
+//
+//		if (!isFallingFinished)
+//			newPiece();
 	}
 
 	private void newPiece() {

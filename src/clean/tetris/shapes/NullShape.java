@@ -5,28 +5,29 @@ import java.util.List;
 
 import clean.tetris.Context;
 
-public class SquareShape extends Shape{
-	public SquareShape(){
+public class NullShape extends Shape{
+	public NullShape(){
 		super(makeStates());
-	}  	
+	}
 
 	private static List<int[][]> makeStates() {
 		List<int[][]> states = new ArrayList<int[][]>();
-		states.add(new int[][]{ {-1, 0}, {-1, 1 }, {0, 0 }, {0, 1} } );
+		states.add(new int[][]{});
 		return states;
-	}  	
+	}
 
 	public int[] getRgb() {
-		return new int[] {204, 102, 204};
+		return new int[] {0, 0, 0};
 	}
 
 	@Override
 	public char getCode() {
-		return Context.Code.SQUARE.letter;
+		return Context.Code.NULLSHAPE.letter;
 	}
 
 	@Override
 	public int initialYSlack() {
 		return 0;
 	}
+	
 }

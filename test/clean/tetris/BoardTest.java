@@ -51,22 +51,17 @@ public class BoardTest {
 	@Test
 	public void lineDownMovesPieceDown() throws Exception{
 		List<String> printed = new Board().add(new SquareShape()).lineDown().asList();
-		
-		for(String line: printed)
-			System.out.println(line);
-		
-		char squareLetter = SQUARE.letter;
-		
+
 		String line1 = printed.get(0);
 		assertEquals(EMPTY.letter,line1.charAt(4));
 		assertEquals(EMPTY.letter,line1.charAt(5));
 		
 		String line2 = printed.get(1);
-		assertEquals(squareLetter,line2.charAt(4));
-		assertEquals(squareLetter,line2.charAt(5));
+		assertEquals(SQUARE.letter,line2.charAt(4));
+		assertEquals(SQUARE.letter,line2.charAt(5));
 		
 		String line3 = printed.get(2);
-		assertEquals(squareLetter,line3.charAt(4));
-		assertEquals(squareLetter,line3.charAt(5));
+		assertEquals(SQUARE.letter,line3.charAt(4));
+		assertEquals(SQUARE.letter,line3.charAt(5));
 	}
 }

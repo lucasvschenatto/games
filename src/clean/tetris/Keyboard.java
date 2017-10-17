@@ -3,7 +3,7 @@ package clean.tetris;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import clean.tetris.shapes.NoShape;
+import clean.tetris.shapes.NullShape;
 import clean.tetris.shapes.Shape;
 
 class Keyboard extends KeyAdapter {
@@ -15,7 +15,7 @@ class Keyboard extends KeyAdapter {
 
 	public void keyPressed(KeyEvent e) {
 
-         if (!controller.isStarted || controller.curPiece instanceof NoShape) {
+         if (!controller.isStarted || controller.curPiece instanceof NullShape) {
              return;
          }
 

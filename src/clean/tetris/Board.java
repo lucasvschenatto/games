@@ -11,11 +11,10 @@ public class Board {
 	private ArrayList<String> grid;
 	private Shape current;
 	private int currentY;
-	private static int STARTING_Y = 1;
 	private static int MIDDLE_X = 5;
 	
 	public Board() {
-		current = Shape.getNoShape();
+		current = Shape.getNullShape();
 		grid = new ArrayList<String>();
 		for (int i = 0; i < 22; i++) {
 			String line = makeEmptyLine();
@@ -54,7 +53,7 @@ public class Board {
 
 	public Board add(Shape shape) {
 		current = shape;
-		currentY = STARTING_Y;
+		currentY = shape.initialYSlack();
 		return this;
 	}
 

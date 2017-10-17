@@ -1,26 +1,35 @@
 package clean.tetris.shapes;
 
+import java.util.List;
 import java.util.Random;
 import java.lang.Math;
 
 
 public abstract class Shape {
-    protected int coordinates[][];
+    private List<int[][]> states;
     public Shape clone(){
 			try {
 				Shape cloned;
-				cloned = (Shape) this.getClass().newInstance();
-				cloned.coordinates = deepCloneArray(coordinates);
+				cloned = this.getClass().newInstance();
+				cloned.states = deepCloneList(this.states);
 				return cloned;
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		System.out.println("noShape on clone");
-    	return new NoShape();
+    	return new NullShape();
     }
     
-    public int[][] getCoordinates(){
-    	return coordinates;
+    @SuppressWarnings("unchecked")
+	private List<int[][]> deepCloneList(List<int[][]> source) throws InstantiationException, IllegalAccessException {
+		List<int[][]> cloned = source.getClass().newInstance();
+		for(int[][] line: source)
+			cloned.add(deepCloneArray(line));
+		return cloned;
+	}
+
+	public int[][] getCoordinates(){
+    	return states.get(0);
     }
     private int[][] deepCloneArray(int[][] source) {
 		int[][]cloned = new int[source.length][source[0].length];
@@ -31,8 +40,8 @@ public abstract class Shape {
 		}
 		return cloned;
 	}
-	public static Shape getNoShape(){
-    	return new NoShape();
+	public static Shape getNullShape(){
+    	return new NullShape();
     }
     public static Shape makeRandom(){
     	Random r = new Random();
@@ -54,67 +63,37 @@ public abstract class Shape {
         	return new JShape();
         default:
         	System.out.println("NoShape on makeRandom");
-        	return new NoShape();
+        	return new NullShape();
         }
     }
 
-    protected Shape( int[][] coordinates) {
-        this.coordinates = coordinates;
+    protected Shape( List<int[][]> states) {
+        this.states = states;
     }
-
-    private void setX(int index, int x) { coordinates[index][0] = x; }
-    private void setY(int index, int y) { coordinates[index][1] = y; }
-    public int x(int index) { return coordinates[index][0];}
-    public int y(int index) { return coordinates[index][1];}
     
+    public abstract int initialYSlack();
+
     public abstract int[] getRgb();
     
     public abstract char getCode();
-    
-    public int minX()
-    {
-      int m = coordinates[0][0];
-      for (int i=0; i < 4; i++) {
-          m = Math.min(m, coordinates[i][0]);
-      }
-      return m;
-    }
-
-
-    public int minY() 
-    {
-      int m = coordinates[0][1];
-      for (int i=0; i < 4; i++) {
-          m = Math.min(m, coordinates[i][1]);
-      }
-      return m;
-    }
 
     public Shape rotateLeft(){
-    	if(this instanceof SquareShape)
-    		return this;
-        Shape result;
-		result = this.clone();
-
-        for (int i = 0; i < 4; ++i) {
-            result.setX(i, y(i));
-            result.setY(i, -x(i));
-        }
-        return result;
-    }
+    	Shape rotated = this.clone();
+    	int[][] first = rotated.states.get(0);
+    	rotated.states.remove(first);
+    	rotated.states.add(first);
+    	return rotated;
+    };
 
     public Shape rotateRight(){
-    	if(this instanceof SquareShape)
-    		return this;
-    	Shape result;
-		result = this.clone();
-
-        for (int i = 0; i < 4; ++i) {
-            result.setX(i, -y(i));
-            result.setY(i, x(i));
-        }
-        return result;
-    }
+    	Shape rotated = this.clone();
+    	int[][] last = rotated.states.get(rotated.states.size()-1);
+    	List<int[][]> head = rotated.states.subList(0, rotated.states.size()-1);
+    	rotated.states.clear();
+    	rotated.states.add(last);
+    	rotated.states.addAll(head);
+    	return rotated;
+    };
     
 
 
