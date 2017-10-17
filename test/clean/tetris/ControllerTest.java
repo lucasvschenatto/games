@@ -2,57 +2,52 @@ package clean.tetris;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class ControllerTest {
 
+	private ViewSpy spyView;
+	private Controller controller;
+	
+	@Before
+	public void setup() {
+		spyView = new ViewSpy();
+		controller = new Controller(spyView);
+	}
+
 	@Test
 	public void givenStartViewAlsoStarts() {
-		ViewSpy spy = new ViewSpy();
-		Controller c = new Controller(spy);
-		c.start();
-		assertTrue(spy.didStart);
+		controller.start();
+		assertEquals(1, spyView.startCount);
 	}
+
 	
 	@Test
 	public void givenStartAndPauseViewAlsoPauses() throws Exception {
-		ViewSpy spy = new ViewSpy();
-		Controller c = new Controller(spy);
-		c.start();
-		c.pause();
-		assertEquals(1,spy.pauses);
+		controller.start();
+		controller.pause();
+		assertEquals(1,spyView.pauses);
+		assertTrue(spyView.paused);
+		assertTrue(spyView.started);
 	}
 	@Test
-	public void givenStartAndPauseViewUpdates() throws Exception {
-		ViewSpy spy = new ViewSpy();
-		Controller c = new Controller(spy);
-		c.start();
-		spy.updates = 0;
-		c.pause();
-		assertEquals(1,spy.updates);
-	}
-	@Test
-	public void givenStartAndTwoPausesViewResumes() throws Exception {
-		ViewSpy spy = new ViewSpy();
-		Controller c = new Controller(spy);
-		c.start();
-		c.pause();
-		c.pause();
-		assertEquals(1,spy.resumes);
+	public void givenStartAndTwoPausesViewIsStarted() throws Exception {
+		controller.start();
+		controller.pause();
+		controller.pause();
+		assertTrue(spyView.started);
 	}
 	
 	@Test
 	public void height(){
-		Controller c = new Controller(new ViewSpy());
-		c.setHeight(123);
-		assertEquals(123,c.getHeight());
+		controller.setHeight(123);
+		assertEquals(123,controller.getHeight());
 	}
 	
 	@Test
 	public void width() throws Exception {
-		Controller c = new Controller(new ViewSpy());
-		c.setWidth(456);
-		assertEquals(456,c.getWidth());
+		controller.setWidth(456);
+		assertEquals(456,controller.getWidth());
 	}
 
 }

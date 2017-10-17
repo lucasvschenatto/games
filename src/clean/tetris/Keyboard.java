@@ -3,6 +3,9 @@ package clean.tetris;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import clean.tetris.shapes.NoShape;
+import clean.tetris.shapes.Shape;
+
 class Keyboard extends KeyAdapter {
 	private final Controller controller;
 

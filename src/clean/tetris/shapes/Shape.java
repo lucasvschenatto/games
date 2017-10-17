@@ -1,4 +1,4 @@
-package clean.tetris;
+package clean.tetris.shapes;
 
 import java.util.Random;
 import java.lang.Math;
@@ -17,6 +17,10 @@ public abstract class Shape {
 			}
 		System.out.println("noShape on clone");
     	return new NoShape();
+    }
+    
+    public int[][] getCoordinates(){
+    	return coordinates;
     }
     private int[][] deepCloneArray(int[][] source) {
 		int[][]cloned = new int[source.length][source[0].length];
@@ -47,7 +51,7 @@ public abstract class Shape {
         case 5:
         	return new LShape();
         case 6:
-        	return new MirroredLShape();
+        	return new JShape();
         default:
         	System.out.println("NoShape on makeRandom");
         	return new NoShape();
@@ -64,6 +68,8 @@ public abstract class Shape {
     public int y(int index) { return coordinates[index][1];}
     
     public abstract int[] getRgb();
+    
+    public abstract char getCode();
     
     public int minX()
     {
@@ -112,77 +118,4 @@ public abstract class Shape {
     
 
 
-}
-class NoShape extends Shape{
-	public NoShape(){
-		super(new int[][] { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } });
-	}
-
-	public int[] getRgb() {
-		return new int[] {0, 0, 0};
-	}
-	
-}
-class ZShape extends Shape{
-	public ZShape(){
-		super(new int[][]{ { 0, -1 },  { 0, 0 },   { -1, 0 },  { -1, 1 } });
-	}
-
-	public int[] getRgb() {
-		return new int[] {204, 102, 102};
-	}
-}
-class SShape extends Shape{
-	public SShape(){
-		super(new int[][]{ { 0, -1 },  { 0, 0 },   { 1, 0 },   { 1, 1 } });
-	}   
-
-	public int[] getRgb() {
-		return new int[] {102, 204, 102};
-	}	
-}
-class LineShape extends Shape{
-	public LineShape(){
-		super(new int[][] { { 0, -1 },  { 0, 0 },   { 0, 1 },   { 0, 2 } });
-	}
-
-	public int[] getRgb() {
-		return new int[] {102, 102, 204};
-	}
-}
-class TShape extends Shape{
-	public TShape(){
-		super(new int[][]{ { -1, 0 },  { 0, 0 },   { 1, 0 },   { 0, 1 } });
-	}   
-
-	public int[] getRgb() {
-		return new int[] {204, 204, 102};
-	}	
-}
-class SquareShape extends Shape{
-	public SquareShape(){
-		super(new int[][]{ { 0, 0 },   { 1, 0 },   { 0, 1 },   { 1, 1 } });
-	}  	
-
-	public int[] getRgb() {
-		return new int[] {204, 102, 204};
-	}
-}
-class LShape extends Shape{
-	public LShape(){
-		super(new int[][] { { -1, -1 }, { 0, -1 },  { 0, 0 },   { 0, 1 } });
-	}  	
-
-	public int[] getRgb() {
-		return new int[] {102, 204, 204};
-	}
-}
-class MirroredLShape extends Shape{
-	public MirroredLShape(){
-		super(new int[][]{ { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } });
-	}  	
-
-	public int[] getRgb() {
-		return new int[] {218, 170, 0};
-	}
 }

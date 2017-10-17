@@ -1,10 +1,12 @@
 package clean.tetris;
 
 class ViewSpy implements View {
-	public boolean didStart;
+	public boolean started;
 	public int pauses;
 	public int resumes;
 	public int updates;
+	public int startCount;
+	public boolean paused;
 
 	@Override
 	public void updateStatus(String newStatus) {
@@ -19,16 +21,19 @@ class ViewSpy implements View {
 
 	@Override
 	public void start() {
-		didStart = true;
+		started = true;
+		startCount++;
 	}
 
 	@Override
 	public void resume(int numLinesRemoved) {
 		resumes++;
+		paused = false;
 	}
 
 	@Override
 	public void pause() {
+		paused = true;
 		pauses++;
 	}
 

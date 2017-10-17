@@ -1,5 +1,7 @@
 package clean.tetris;
 
+import clean.tetris.shapes.Shape;
+
 public class Controller {
 	private int width = 10;
 	private int height = 22;
@@ -128,7 +130,7 @@ public class Controller {
 			move(curPiece, curX, curY);
 		} else {
 			view.notifyGameOver();
-			isStarted = false;
+//			isStarted = false;
 		}
 	}
 
