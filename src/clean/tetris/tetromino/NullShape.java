@@ -1,7 +1,6 @@
 package clean.tetris.tetromino;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import clean.tetris.Context;
 
@@ -10,8 +9,8 @@ public class NullShape extends Tetromino{
 		super(makeStates());
 	}
 
-	private static List<int[][]> makeStates() {
-		List<int[][]> states = new ArrayList<int[][]>();
+	private static LinkedList<int[][]> makeStates() {
+		LinkedList<int[][]> states = new LinkedList<int[][]>();
 		states.add(new int[][]{});
 		return states;
 	}
