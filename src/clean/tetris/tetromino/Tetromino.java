@@ -28,7 +28,7 @@ public abstract class Tetromino {
 		return cloned;
 	}
 
-	public int[][] getCoordinates(){
+	public int[][] getSquares(){
     	return states.get(0);
     }
     private int[][] deepCloneArray(int[][] source) {
@@ -77,7 +77,7 @@ public abstract class Tetromino {
     
     public abstract char getCode();
 
-    public Tetromino rotateLeft(){
+    public Tetromino rotateRight(){
     	Tetromino rotated = this.clone();
     	int[][] first = rotated.states.get(0);
     	rotated.states.remove(first);
@@ -85,14 +85,19 @@ public abstract class Tetromino {
     	return rotated;
     };
 
-    public Tetromino rotateRight(){
+    public Tetromino rotateLeft(){
     	Tetromino rotated = this.clone();
     	int[][] last = rotated.states.get(rotated.states.size()-1);
-    	List<int[][]> head = rotated.states.subList(0, rotated.states.size()-1);
-    	rotated.states.clear();
-    	rotated.states.add(last);
-    	rotated.states.addAll(head);
-    	return rotated;
+    	try {
+			List<int [][]> copyOfHead = deepCloneList(rotated.states).subList(0, rotated.states.size()-1);
+			rotated.states.clear();
+			rotated.states.add(last);
+			rotated.states.addAll(copyOfHead);
+			return rotated;
+		} catch (InstantiationException | IllegalAccessException e1) {
+			e1.printStackTrace();
+			return null;
+		}
     };
     
 
