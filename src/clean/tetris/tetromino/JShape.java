@@ -27,8 +27,4 @@ public class JShape extends Tetromino{
 		return Context.Code.JSHAPE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 1;
-	}
 }

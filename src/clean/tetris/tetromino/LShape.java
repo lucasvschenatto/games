@@ -27,8 +27,4 @@ public class LShape extends Tetromino{
 		return Context.Code.LSHAPE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 1;
-	}
 }

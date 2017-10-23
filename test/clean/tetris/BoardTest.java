@@ -10,6 +10,12 @@ import static clean.tetris.Context.Code.*;
 
 public class BoardTest {
 
+	private void print(Board board){
+		for(String line: board.asList())
+			System.out.println(line);
+		System.out.println();
+	}
+
 	@Test
 	public void is22linesTall() throws Exception {
 		Board b = new Board();
@@ -73,6 +79,18 @@ public class BoardTest {
 			board.lineDown();
 		assertFalse(board.canMoveLineDown());
 	}
+	
+	@Test
+	public void ifHitsGround_PieceDoesNotGoDown() throws Exception {
+		Board board = new Board().add(new SquareShape());
+			for (int i = 0; i < 21; i++)
+				board.lineDown();			
+		try {
+			board.asList();
+		} catch (IndexOutOfBoundsException e) {
+			fail("tried to move piece down beyond grid");
+		}
+	}
 	@Test
 	public void ifDoesntHitGroundCanMoveLineDown() throws Exception {
 		Board board = new Board().add(new SquareShape());
@@ -130,7 +148,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void cantMoveIfHitsFreezedPiece() throws Exception {
+	public void canNotMoveIfHitsFreezedPiece() throws Exception {
 		Board board = new Board().add(new SquareShape()).dropDown().add(new SquareShape());
 		for (int i = 0; i < 18; i++)
 			board.lineDown();
@@ -174,7 +192,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void whenCantMoveLeft_thenPieceDoesNotMove() throws Exception {
+	public void whenCanNotMoveLeft_thenPieceDoesNotMove() throws Exception {
 		Board board = new Board().add(new LineShape()).moveLeft().moveLeft().dropDown();
 		
 		board.add(new SquareShape());
@@ -195,7 +213,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void cantMoveLeftBeyondFirstColumn() throws Exception {
+	public void canNotMoveLeftBeyondFirstColumn() throws Exception {
 		Board board = new Board().add(new SquareShape());
 		
 		for(int i = 0; i < 5; i++)
@@ -227,7 +245,7 @@ public class BoardTest {
 	
 
 	@Test
-	public void whenCantMoveRight_thenPieceDoesNotMove() throws Exception {
+	public void whenCanNotMoveRight_thenPieceDoesNotMove() throws Exception {
 		Board board = new Board().add(new LineShape()).moveRight().dropDown();
 		
 		board.add(new SquareShape());
@@ -248,7 +266,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void cantMoveRighttBeyondLastColumn() throws Exception {
+	public void canNotMoveRighttBeyondLastColumn() throws Exception {
 		Board board = new Board().add(new SquareShape());
 		
 		for(int i = 0; i < 5; i++)
@@ -282,7 +300,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void whenCantRotateLeft_PieceDoesntMove() throws Exception {
+	public void whenCanNotRotateLeft_PieceDoesntMove() throws Exception {
 		Board board = new Board().add(new SShape()).rotateLeft();
 		
 		List<String> printed = board.asList();
@@ -318,7 +336,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void whenCantRotateRight_PieceDoesntMove() throws Exception {
+	public void whenCanNotRotateRight_PieceDoesntMove() throws Exception {
 		Board board = new Board().add(new TShape()).rotateRight();
 		
 		List<String> printed = board.asList();
@@ -332,5 +350,86 @@ public class BoardTest {
 		assertEquals(TSHAPE.letter,line2.charAt(5));
 		
 	}
+	
+	@Test
+	public void freezesPiece() throws Exception {
+		Board board = new Board().add(new SquareShape()).moveLeft().moveLeft().moveLeft().moveLeft();
+		board.freezePiece();
+		board.add(new SquareShape());
+		
+		List<String> printed = board.asList();
+		String line1 = printed.get(0);
+		assertEquals(SQUARE.letter,line1.charAt(0));
+		assertEquals(SQUARE.letter,line1.charAt(1));
+		
+		String line2 = printed.get(1);
+		assertEquals(SQUARE.letter,line2.charAt(0));
+		assertEquals(SQUARE.letter,line2.charAt(1));
+	}
+	
+	@Test
+	public void clearFullLines() throws Exception {
+		Board board = new Board();
+		board.add(new SquareShape()).moveLeft().moveLeft().moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().moveRight().moveRight().dropDown();
+		board.clearFullLines();
+		
+		List<String> printed = board.asList();
+		String line21 = printed.get(20);
+		for(char letter: line21.toCharArray())
+			assertEquals(EMPTY.letter, letter);
+		
+		String line22 = printed.get(21);
+		for(char letter: line22.toCharArray())
+			assertEquals(EMPTY.letter, letter);
+	}
+	
+	@Test
+	public void clearFullLines_ShiftsRemainingLinesDown() throws Exception {
+		Board board = new Board();
+		board.add(new SquareShape()).moveLeft().moveLeft().moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).dropDown();
+		board.add(new SquareShape()).dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().moveRight().moveRight().dropDown();
+		board.clearFullLines();
+		
+		List<String> printed = board.asList();
+		String secondLastLine = printed.get(printed.size() - 2);
+		assertEquals(SQUARE.letter,secondLastLine.charAt(4));
+		assertEquals(SQUARE.letter,secondLastLine.charAt(5));
+		
+		String lastLine = printed.get(printed.size() - 1);
+		assertEquals(SQUARE.letter,lastLine.charAt(4));
+		assertEquals(SQUARE.letter,lastLine.charAt(5));
+	}
+	
+	@Test
+	public void currentPieceDoesNotCountToConsiderLineFull() throws Exception {
+		Board board = new Board();
+		board.add(new SquareShape()).moveLeft().moveLeft().moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).moveLeft().moveLeft().dropDown();
+		board.add(new SquareShape()).dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().dropDown();
+		board.add(new SquareShape()).moveRight().moveRight().moveRight().moveRight();
+		for(int i = 0; i< 21; i++)
+			board.lineDown();
+		
+		board.clearFullLines();
+		
+		List<String> printed = board.asList();
+		String line21 = printed.get(20);
+		for(char letter: line21.toCharArray())
+			assertEquals(SQUARE.letter, letter);
+		
+		String line22 = printed.get(21);
+		for(char letter: line22.toCharArray())
+			assertEquals(SQUARE.letter, letter);
+	}
+
 
 }

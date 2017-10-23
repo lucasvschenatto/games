@@ -27,8 +27,4 @@ public class LineShape extends Tetromino{
 		return Context.Code.LINESHAPE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 1;
-	}
 }

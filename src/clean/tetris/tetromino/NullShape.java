@@ -24,9 +24,5 @@ public class NullShape extends Tetromino{
 		return Context.Code.NULLSHAPE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 0;
-	}
 	
 }

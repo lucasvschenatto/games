@@ -24,8 +24,4 @@ public class SquareShape extends Tetromino{
 		return Context.Code.SQUARE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 0;
-	}
 }

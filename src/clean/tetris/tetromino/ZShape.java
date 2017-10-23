@@ -27,8 +27,4 @@ public class ZShape extends Tetromino{
 		return Context.Code.ZSHAPE.letter;
 	}
 
-	@Override
-	public int initialYSlack() {
-		return 0;
-	}
 }

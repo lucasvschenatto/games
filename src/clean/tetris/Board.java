@@ -17,8 +17,7 @@ public class Board {
 	public Board() {
 		this.current = Tetromino.getNullShape();
 		this.grid = new ArrayList<String>();
-		for (int i = 0; i < 22; i++)
-			grid.add(makeEmptyLine());
+		addEmptyLinesOnTop();
 	}
 
 	public Board add(Tetromino shape) {
@@ -37,9 +36,20 @@ public class Board {
 		return canMove(0, 1);
 	}
 
+	public Board clearFullLines() {
+		grid = cloneGridWithoutFullLines();
+		addEmptyLinesOnTop();
+		return this;
+	}
+
 	public Board dropDown() {
 		while (canMoveLineDown())
 			lineDown();
+		freezePiece();
+		return this;
+	}
+
+	public Board freezePiece() {
 		this.grid = overlapShapeOnClonedGrid();
 		this.current = Tetromino.getNullShape();
 		return this;
@@ -50,7 +60,8 @@ public class Board {
 	}
 
 	public Board lineDown() {
-		currentY++;
+		if(canMoveLineDown())
+			currentY++;
 		return this;
 	}
 
@@ -76,11 +87,9 @@ public class Board {
 		return this;
 	}
 
-	private void tryToPersistRotation(Tetromino rotated) {
-		Tetromino previous = current;
-		current = rotated;
-		if (!canMove(0, 0))
-			current = previous;
+	private void addEmptyLinesOnTop() {
+		while(grid.size() < 22)
+			grid.add(0,makeEmptyLine());
 	}
 
 	private boolean canMove(int distanceX, int distanceY) {
@@ -99,6 +108,25 @@ public class Board {
 			return true;
 	}
 
+	@SuppressWarnings("unchecked")
+	private ArrayList<String> cloneGrid() {
+		return (ArrayList<String>) grid.clone();
+	}
+
+	private ArrayList<String> cloneGridWithoutFullLines() {
+		ArrayList<String> cloned = cloneGrid();
+		removeFullLines(cloned);
+		return cloned;
+	}
+
+	private int getCharIndex(int[] coordinate) {
+		return currentX + coordinate[0];
+	}
+
+	private int getLineIndex(int[] coordinate) {
+		return currentY + coordinate[1];
+	}
+
 	private boolean isTargetEmpty(int lineIndex, int charIndex) {
 		return grid.get(lineIndex).charAt(charIndex) == EMPTY.letter;
 	}
@@ -111,29 +139,11 @@ public class Board {
 		return lineIndex >= 0 && lineIndex < grid.size();
 	}
 
-	private int getCharIndex(int[] coordinate) {
-		return currentX + coordinate[0];
-	}
-
-	private int getLineIndex(int[] coordinate) {
-		return currentY + coordinate[1];
-	}
-
 	private String makeEmptyLine() {
 		String line = new String();
 		for (int i = 0; i < 10; i++)
 			line = line.concat(String.valueOf(EMPTY));
 		return line;
-	}
-
-	@SuppressWarnings("unchecked")
-	private ArrayList<String> overlapShapeOnClonedGrid() {
-		ArrayList<String> cloned = (ArrayList<String>) grid.clone();
-		char letter = current.getCode();
-		for (int[] square : current.getSquares())
-			overlapLetterOnGrid(cloned, letter, square);
-	
-		return cloned;
 	}
 
 	private void overlapLetterOnGrid(ArrayList<String> targetGrid, char letter, int[] square) {
@@ -151,6 +161,36 @@ public class Board {
 		String sufix = line.substring(charIndex + 1);
 
 		return prefix.concat(String.valueOf(letter).concat(sufix));
+	}
+
+
+	private ArrayList<String> overlapShapeOnClonedGrid() {
+		ArrayList<String> cloned = cloneGrid();
+		char letter = current.getCode();
+		for (int[] square : current.getSquares())
+			overlapLetterOnGrid(cloned, letter, square);
+	
+		return cloned;
+	}
+
+	private void removeFullLines(ArrayList<String> cloned) {
+		for(String line : grid)
+			if(shouldRemoveLine(line))
+				cloned.remove(line);
+	}
+
+	private boolean shouldRemoveLine(String line) {
+		for(char letter: line.toCharArray())
+			if(letter == EMPTY.letter)
+				return false;
+		return true;
+	}
+
+	private void tryToPersistRotation(Tetromino rotated) {
+		Tetromino previous = current;
+		current = rotated;
+		if (!canMove(0, 0))
+			current = previous;
 	}
 
 }

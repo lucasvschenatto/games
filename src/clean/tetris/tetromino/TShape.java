@@ -26,9 +26,5 @@ public class TShape extends Tetromino{
 	public char getCode() {
 		return Context.Code.TSHAPE.letter;
 	}
-
-	@Override
-	public int initialYSlack() {
-		return 0;
-	}	
+	
 }
