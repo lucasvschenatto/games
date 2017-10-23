@@ -8,13 +8,24 @@ import clean.tetris.tetromino.Tetromino;
 import static clean.tetris.Context.Code.EMPTY;
 
 public class Board {
-	private static int MIDDLE_X = 5;
+	private static int STANDARD_HEIGHT = 22;
+	private static int STANDARD_WIDTH  = 10;
 	private Tetromino current;
 	private int currentX;
 	private int currentY;
 	private ArrayList<String> grid;
+	private final int height;
+	private final int middleWidth;
+	private final int width;
 
 	public Board() {
+		this(STANDARD_HEIGHT, STANDARD_WIDTH);
+	}
+
+	public Board(int height, int width) {
+		this.height = height;
+		this.width = width;
+		this.middleWidth = width/2;
 		this.current = Tetromino.getNullShape();
 		this.grid = new ArrayList<String>();
 		addEmptyLinesOnTop();
@@ -23,7 +34,7 @@ public class Board {
 	public Board add(Tetromino shape) {
 		current = shape;
 		currentY = shape.initialYSlack();
-		currentX = MIDDLE_X;
+		currentX = middleWidth;
 		return this;
 	}
 
@@ -53,6 +64,14 @@ public class Board {
 		this.grid = overlapShapeOnClonedGrid();
 		this.current = Tetromino.getNullShape();
 		return this;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
 	}
 
 	public boolean isGameOver() {
@@ -88,7 +107,7 @@ public class Board {
 	}
 
 	private void addEmptyLinesOnTop() {
-		while(grid.size() < 22)
+		while(grid.size() < getHeight())
 			grid.add(0,makeEmptyLine());
 	}
 
@@ -141,10 +160,11 @@ public class Board {
 
 	private String makeEmptyLine() {
 		String line = new String();
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < getWidth(); i++)
 			line = line.concat(String.valueOf(EMPTY));
 		return line;
 	}
+
 
 	private void overlapLetterOnGrid(ArrayList<String> targetGrid, char letter, int[] square) {
 		int lineIndex = getLineIndex(square);
@@ -162,7 +182,6 @@ public class Board {
 
 		return prefix.concat(String.valueOf(letter).concat(sufix));
 	}
-
 
 	private ArrayList<String> overlapShapeOnClonedGrid() {
 		ArrayList<String> cloned = cloneGrid();

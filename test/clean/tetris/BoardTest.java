@@ -31,6 +31,21 @@ public class BoardTest {
 		}
 		
 	}
+	@Test
+	public void canChooseHeight() throws Exception {
+		Board b = new Board(43,0);
+		assertEquals(43,b.asList().size());
+	}
+	
+	@Test
+	public void canChooseWidth() throws Exception {
+		List<String> printed = new Board(1,27).asList();
+		
+		for (String line : printed) {
+			assertEquals(27,line.length());
+		}
+		
+	}
 	
 	@Test
 	public void newBoardFilledWithMinus() throws Exception {
