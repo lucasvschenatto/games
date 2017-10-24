@@ -193,6 +193,11 @@ public class BoardTest {
 	}
 	
 	@Test
+	public void gameOverIsNotWorking() throws Exception {
+		fail("Game over is wrong!");
+	}
+	
+	@Test
 	public void whenMoveLeft_thenPieceGoesLeft() throws Exception {
 		Board board = new Board().add(new SquareShape()).moveLeft();
 		

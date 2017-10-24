@@ -20,7 +20,6 @@ public class ControllerTest {
 		controller.start();
 		assertEquals(1, spyView.startCount);
 	}
-
 	
 	@Test
 	public void givenStartAndPauseViewAlsoPauses() throws Exception {
@@ -30,24 +29,13 @@ public class ControllerTest {
 		assertTrue(spyView.paused);
 		assertTrue(spyView.started);
 	}
+	
 	@Test
 	public void givenStartAndTwoPausesViewIsStarted() throws Exception {
 		controller.start();
 		controller.pause();
 		controller.pause();
 		assertTrue(spyView.started);
-	}
-	
-	@Test
-	public void height(){
-		controller.setHeight(123);
-		assertEquals(123,controller.getHeight());
-	}
-	
-	@Test
-	public void width() throws Exception {
-		controller.setWidth(456);
-		assertEquals(456,controller.getWidth());
 	}
 
 }

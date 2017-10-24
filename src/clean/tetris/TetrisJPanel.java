@@ -3,12 +3,13 @@ package clean.tetris;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 public class TetrisJPanel extends JPanel{
 	private static final long serialVersionUID = 176803555182914844L;
-	private String[][] board;
+	private List<String> board;
 	public TetrisJPanel(){
 		setFocusable(true);
 	}
@@ -16,12 +17,12 @@ public class TetrisJPanel extends JPanel{
     int squareWidth() { return (int) getSize().getWidth() / getBoardWidth(); }
 
 	private int getBoardWidth() {
-		return board.length;
+		return board.size();
 	}
     int squareHeight() { return (int) getSize().getHeight() / getBoardHeight(); }
 
 	private int getBoardHeight() {
-		return board[0].length;
+		return board.get(0).length();
 	}
 
     @Override
@@ -35,7 +36,7 @@ public class TetrisJPanel extends JPanel{
 
         for (int i = 0; i < getBoardWidth(); ++i) {
             for (int j = 0; j < getBoardHeight(); ++j) {
-                if (this.board[i][j] != null)
+                if (this.board.get(i).charAt(j) != Context.Code.EMPTY.letter)
                     drawSquare(g, 0 + i * squareWidth(),
                                boardTop + j * squareHeight(), new Color(255,255,255));
             }
@@ -67,7 +68,7 @@ public class TetrisJPanel extends JPanel{
                          x + squareWidth() - 1, y + 1);
     }
 
-	public void repaintBoard(String[][] board) {
+	public void repaintBoard(List<String> board) {
 		this.board = board;
 		repaint();
 	}

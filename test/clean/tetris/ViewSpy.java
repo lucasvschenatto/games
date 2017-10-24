@@ -1,5 +1,7 @@
 package clean.tetris;
 
+import java.util.List;
+
 class ViewSpy implements View {
 	public boolean started;
 	public int pauses;
@@ -9,24 +11,13 @@ class ViewSpy implements View {
 	public boolean paused;
 
 	@Override
-	public void updateStatus(String newStatus) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void update(String[][] board) {
-		updates++;
-	}
-
-	@Override
 	public void start() {
 		started = true;
 		startCount++;
 	}
 
 	@Override
-	public void resume(int numLinesRemoved) {
+	public void resume() {
 		resumes++;
 		paused = false;
 	}
@@ -41,5 +32,11 @@ class ViewSpy implements View {
 	public void notifyGameOver() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void update(List<String> board) {
+		// TODO Auto-generated method stub
+		
 	}
 }

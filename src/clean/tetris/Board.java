@@ -10,13 +10,13 @@ import static clean.tetris.Context.Code.EMPTY;
 public class Board {
 	private static int STANDARD_HEIGHT = 22;
 	private static int STANDARD_WIDTH  = 10;
+	final int height;
+	final int width;
+	private final int middleWidth;
 	private Tetromino current;
 	private int currentX;
 	private int currentY;
 	private ArrayList<String> grid;
-	private final int height;
-	private final int middleWidth;
-	private final int width;
 
 	public Board() {
 		this(STANDARD_HEIGHT, STANDARD_WIDTH);
@@ -121,10 +121,9 @@ public class Board {
 	private boolean canMoveSquare(int[] square, int distanceX, int distanceY) {
 		int lineIndex = getLineIndex(square) + distanceY;
 		int charIndex = getCharIndex(square) + distanceX;
-		if (! isValidLineIndex(lineIndex) || ! isValidCharIndex(charIndex) || ! isTargetEmpty(lineIndex, charIndex))
-			return false;
-		else
+		if (isValidLineIndex(lineIndex) && isValidCharIndex(charIndex) && isTargetEmpty(lineIndex, charIndex))
 			return true;
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")

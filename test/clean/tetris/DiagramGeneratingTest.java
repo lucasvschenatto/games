@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import reversej.controller.Controller;
 import reversej.tracer.RepositoryRecorder;
-public class TetrisTest {
+public class DiagramGeneratingTest {
 
 	@Test@Ignore
 	public void test() {

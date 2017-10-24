@@ -3,9 +3,6 @@ package clean.tetris;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import clean.tetris.tetromino.NullShape;
-import clean.tetris.tetromino.Tetromino;
-
 class Keyboard extends KeyAdapter {
 	private final Controller controller;
 
@@ -14,47 +11,35 @@ class Keyboard extends KeyAdapter {
 	}
 
 	public void keyPressed(KeyEvent e) {
-
-         if (!controller.isStarted || controller.curPiece instanceof NullShape) {
-             return;
-         }
-
-         int keycode = e.getKeyCode();
-
-         if (keycode == 'p' || keycode == 'P') {
-             controller.pause();
-             return;
-         }
-
-         if (controller.isPaused)
-             return;
-
-         switch (keycode) {
+         switch (e.getKeyCode()) {
+         case KeyEvent.VK_P:
+        	 controller.pause();
+        	 return;
+         case 'p':
+        	 controller.pause();
+        	 return;
          case KeyEvent.VK_LEFT:
-             if(controller.canMove(controller.curPiece, controller.curX - 1, controller.curY))
-            	 controller.move(controller.curPiece, controller.curX - 1, controller.curY);
+             controller.moveLeft();
              return;
          case KeyEvent.VK_RIGHT:
-             if(controller.canMove(controller.curPiece, controller.curX + 1, controller.curY))
-            	 controller.move(controller.curPiece, controller.curX + 1, controller.curY);
+             controller.moveRight();
              return;
          case KeyEvent.VK_DOWN:
-             if(controller.canMove(controller.curPiece.rotateRight(), controller.curX, controller.curY))
-            	 controller.move(controller.curPiece.rotateRight(), controller.curX, controller.curY);
+             controller.rotateRight();
              return;
          case KeyEvent.VK_UP:
-             if(controller.canMove(controller.curPiece.rotateLeft(), controller.curX, controller.curY))
-	             controller.move(controller.curPiece.rotateLeft(), controller.curX, controller.curY);
+             controller.rotateLeft();
              return;
          case KeyEvent.VK_SPACE:
              controller.dropDown();
              return;
+         case KeyEvent.VK_D:
+        	 controller.lineDown();
+        	 return;
          case 'd':
-             controller.oneLineDown();
+             controller.lineDown();
              return;
-         case 'D':
-             controller.oneLineDown();
-             return;
+         
          }
 
      }

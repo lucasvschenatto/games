@@ -7,7 +7,7 @@ public class TimeListener implements ActionListener{
 	private Controller controller;
 	
 	public void actionPerformed(ActionEvent e) {
-		controller.lineDown();
+		controller.next();
 	}
 	public void setController(Controller controller) {
 		this.controller = controller;

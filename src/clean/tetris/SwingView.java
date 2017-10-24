@@ -1,6 +1,7 @@
 package clean.tetris;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -44,11 +45,6 @@ public class SwingView extends JFrame implements View {
 	}
 
 	@Override
-	public void updateStatus(String newStatus) {
-		statusBar.setText(newStatus);
-	}
-
-	@Override
 	public void notifyGameOver() {
 		statusBar.setText("Game Over");
 		timer.stop();
@@ -58,17 +54,17 @@ public class SwingView extends JFrame implements View {
 	public void start() {
 		setLocationRelativeTo(null);
 	    setVisible(true);
+	    timer.start();
 	}
 
 	@Override
-	public void update(String[][] board) {
+	public void update(List<String> board) {
 		tetrisJPanel.repaintBoard(board);
 	}
 
 	@Override
-	public void resume(int numLinesRemoved) {
+	public void resume() {
 		timer.start();
-		statusBar.setText(String.valueOf(numLinesRemoved));
 	}
 
 }

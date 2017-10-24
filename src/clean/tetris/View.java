@@ -1,15 +1,15 @@
 package clean.tetris;
 
+import java.util.List;
+
 public interface View {
-	public void update(String[][] board);
+	public void update(List<String> board);
 
 	public void pause();
-
-	public void updateStatus(String newStatus);
 
 	public void notifyGameOver();
 
 	public void start();
 
-	public void resume(int numLinesRemoved);
+	public void resume();
 }

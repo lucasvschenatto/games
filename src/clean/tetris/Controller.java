@@ -1,184 +1,67 @@
 package clean.tetris;
 
-import clean.tetris.tetromino.Tetromino;
-
 public class Controller {
-	private int width = 10;
-	private int height = 22;
 
-	boolean isFallingFinished = false;
-	boolean isStarted = false;
-	boolean isPaused = false;
-	int numLinesRemoved = 0;
-	int curX = 0;
-	int curY = 0;
-	Tetromino curPiece;
-	Tetromino[][] board;
-	String[][] stringBoard;
+	private boolean isStarted = false;
+	private boolean isPaused = false;
+	private StateBoard board;
 	private View view;
 
 	public Controller(View view) {
-
 		this.view = view;
-		curPiece = Tetromino.makeRandom();
-		board = new Tetromino[getWidth()][getHeight()];
-		stringBoard = new String[getWidth()][getHeight()];
-	}
-
-	public void lineDown() {
-		if (isFallingFinished) {
-			isFallingFinished = false;
-			newPiece();
-		} else {
-			oneLineDown();
-		}
-	}
-
-	Tetromino shapeAt(int x, int y) {
-		return board[x][y];
+		this.board = StateBoard.make();
 	}
 
 	public void start() {
 		if (isPaused)
 			return;
-
 		isStarted = true;
-		isFallingFinished = false;
-		numLinesRemoved = 0;
-
-		newPiece();
 		view.start();
 	}
 
-	void pause() {
-		if (!isStarted)
+	public void pause() {
+		if (! isStarted)
 			return;
-
-		isPaused = !isPaused;
-		if (isPaused) {
+		isPaused = ! isPaused;
+		
+		if (isPaused)
 			view.pause();
-		} else {
-			view.resume(numLinesRemoved);
-		}
-		view.update(stringBoard);
-	}
-
-	void oneLineDown() {
-		if (canMove(curPiece, curX, curY - 1))
-			move(curPiece, curX, curY - 1);
 		else
-			pieceDropped();
+			view.resume();
 	}
 
-	void dropDown() {
-		int newY = curY;
-		while (newY > 0) {
-			if (canMove(curPiece, curX, newY - 1)) {
-				move(curPiece, curX, newY - 1);
-				--newY;
-			} else
-				break;
-		}
-		pieceDropped();
+	public void moveLeft() {
+		board = board.moveLeft();
+		view.update(board.asList());
 	}
 
-	boolean canMove(Tetromino newPiece, int xTo, int yTo) {
-//		for (int i = 0; i < 4; ++i) {
-//			int x = xTo + newPiece.x(i);
-//			if (x < 0 || x > getWidth() - 1)
-//				return false;
-//	
-//			int y = yTo - newPiece.y(i);
-//			if (y < 0 || y > getHeight() - 1)
-//				return false;
-//	
-//			Shape sat = shapeAt(x, y);
-//			if (sat != null)
-//				return false;
-//		}
-		return true;
+	public void moveRight() {
+		board = board.moveRight();
+		view.update(board.asList());
 	}
 
-	void move(Tetromino newPiece, int xTo, int yTo) {
-		curPiece = newPiece;
-		curX = xTo;
-		curY = yTo;
-		stringBoard[xTo][yTo] = newPiece.getClass().getSimpleName();
-		view.update(stringBoard);
+	public void rotateRight() {
+		board = board.rotateRight();
+		view.update(board.asList());		
 	}
 
-	private void pieceDropped() {
-//		for (int i = 0; i < 4; ++i) {
-//			int x = curX + curPiece.x(i);
-//			int y = curY - curPiece.y(i);
-//			board[y][x] = curPiece;
-//		}
-//
-//		removeFullLines();
-//
-//		if (!isFallingFinished)
-//			newPiece();
+	public void rotateLeft() {
+		board = board.rotateLeft();
+		view.update(board.asList());
 	}
 
-	private void newPiece() {
-		curPiece = Tetromino.makeRandom();
-		curX = getWidth() / 2;
-//		curY = getHeight() - 1 + curPiece.minY();
-		curY = 0;
-
-		if (canMove(curPiece, curX, curY)) {
-			move(curPiece, curX, curY);
-		} else {
-			view.notifyGameOver();
-//			isStarted = false;
-		}
+	public void dropDown() {
+		board = board.dropDown();
+		view.update(board.asList());
 	}
 
-	private void removeFullLines() {
-		int numFullLines = 0;
-
-		for (int i = getHeight() - 1; i >= 0; --i) {
-			boolean lineIsFull = true;
-
-			for (int j = 0; j < getWidth(); ++j) {
-				Tetromino sat = shapeAt(j, i);
-				if (sat == null) {
-					lineIsFull = false;
-					break;
-				}
-			}
-
-			if (lineIsFull) {
-				++numFullLines;
-				for (int k = i; k < getHeight() - 1; ++k) {
-					for (int j = 0; j < getWidth(); ++j)
-						board[k][j] = shapeAt(j, k + 1);
-				}
-			}
-		}
-
-		if (numFullLines > 0) {
-			numLinesRemoved += numFullLines;
-			view.updateStatus(String.valueOf(numLinesRemoved));
-			isFallingFinished = true;
-			curPiece = null;
-			view.update(stringBoard);
-		}
+	public void lineDown() {
+		board = board.lineDown();
+		view.update(board.asList());
 	}
 
-	int getHeight() {
-		return height;
-	}
-
-	void setHeight(int height) {
-		this.height = height;
-	}
-
-	int getWidth() {
-		return width;
-	}
-
-	void setWidth(int width) {
-		this.width = width;
+	public void next() {
+		board = board.next();
+		view.update(board.asList());
 	}
 }
