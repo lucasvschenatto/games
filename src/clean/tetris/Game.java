@@ -5,10 +5,6 @@ public abstract class Game {
 	
     public void run() {
         this.start();
-        while(true){
-        	if(Context.GAME_OVER)
-        		return;
-        }
-        
+        while(! Context.FINISHED){ }
     }
 }

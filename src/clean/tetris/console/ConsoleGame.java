@@ -1,4 +1,8 @@
-package clean.tetris;
+package clean.tetris.console;
+
+import clean.tetris.Controller;
+import clean.tetris.Game;
+import clean.tetris.Timer;
 
 public class ConsoleGame extends Game{
 	private Controller controller;

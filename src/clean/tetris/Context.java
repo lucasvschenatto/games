@@ -16,6 +16,7 @@ public class Context {
 		
 	}
 
-	public static boolean GAME_OVER;;
+	public static volatile boolean GAME_OVER;
+	public static volatile boolean FINISHED;
 
 }

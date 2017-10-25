@@ -1,6 +1,9 @@
-package clean.tetris;
+package clean.tetris.console;
 
 import java.util.TimerTask;
+
+import clean.tetris.Controller;
+import clean.tetris.Timer;
 
 public class ConsoleTimer extends java.util.Timer implements Timer{
 

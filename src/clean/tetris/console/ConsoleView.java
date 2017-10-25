@@ -1,6 +1,9 @@
-package clean.tetris;
+package clean.tetris.console;
 
 import java.util.List;
+
+import clean.tetris.Context;
+import clean.tetris.View;
 
 public class ConsoleView implements View {
 
@@ -23,6 +26,7 @@ public class ConsoleView implements View {
 
 	@Override
 	public void notifyGameOver() {
+		Context.FINISHED = true;
 		System.out.println("Game Over");
 		printSeparator();
 	}

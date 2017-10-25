@@ -1,7 +1,9 @@
-package clean.tetris;
+package clean.tetris.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import clean.tetris.Controller;
 
 public class TimeListener implements ActionListener{
 	private Controller controller;

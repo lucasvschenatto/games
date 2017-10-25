@@ -1,7 +1,9 @@
-package clean.tetris;
+package clean.tetris.swing;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import clean.tetris.Controller;
 
 class Keyboard extends KeyAdapter {
 	private final Controller controller;

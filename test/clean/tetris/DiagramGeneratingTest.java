@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import clean.tetris.swing.SwingGame;
 import reversej.controller.Controller;
 import reversej.tracer.RepositoryRecorder;
 public class DiagramGeneratingTest {

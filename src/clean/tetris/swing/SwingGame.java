@@ -1,8 +1,11 @@
-package clean.tetris;
+package clean.tetris.swing;
 
 import javax.swing.Timer;
 
-public class SwingGame {
+import clean.tetris.Controller;
+import clean.tetris.Game;
+
+public class SwingGame extends Game{
 	private Controller controller;
 	private Timer timer;
 
@@ -14,7 +17,8 @@ public class SwingGame {
 		sv.addKeyListener(new Keyboard(controller));
 		listener.setController(controller);
 	}
-
+	
+	@Override
 	public void start() {
 		controller.start();
 	}

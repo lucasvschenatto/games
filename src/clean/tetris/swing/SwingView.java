@@ -1,4 +1,4 @@
-package clean.tetris;
+package clean.tetris.swing;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+
+import clean.tetris.View;
 
 public class SwingView extends JFrame implements View {
 	

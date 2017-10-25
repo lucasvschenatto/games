@@ -1,4 +1,4 @@
-package clean.tetris;
+package clean.tetris.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import clean.tetris.Context;
+import clean.tetris.Context.Code;
 
 public class TetrisJPanel extends JPanel{
 	private static final long serialVersionUID = 176803555182914844L;
