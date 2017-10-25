@@ -3,14 +3,16 @@ package clean.tetris;
 import java.util.List;
 
 public abstract class StateBoard {
-	protected static Board board;
+	protected static Board BOARD;
+	protected static Controller CONTROLLER;
 	protected static StateBoard FINISHED_PIECE;
 	protected static StateBoard GAME_OVER;
 	protected static StateBoard INITIAL;
 	protected static StateBoard RUNNING_PIECE;
 
-	public static StateBoard make() {
-		board = new Board();
+	public static StateBoard make(Controller controller) {
+		CONTROLLER = controller;
+		BOARD = new Board();
 		INITIAL = new InitialState();
 		RUNNING_PIECE = new RunningPieceState();
 		FINISHED_PIECE = new FinishedPieceState();
@@ -22,7 +24,7 @@ public abstract class StateBoard {
 	}
 
 	public List<String> asList() {
-		return board.asList();
+		return BOARD.asList();
 	}
 
 	public abstract StateBoard dropDown();

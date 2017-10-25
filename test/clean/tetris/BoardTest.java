@@ -193,8 +193,10 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void gameOverIsNotWorking() throws Exception {
-		fail("Game over is wrong!");
+	public void whenPieceIsNotOnTopIsNotGameOver() throws Exception {
+		Board board = new Board().add(new SquareShape()).dropDown();
+		print(board);
+		assertFalse(board.isGameOver());
 	}
 	
 	@Test

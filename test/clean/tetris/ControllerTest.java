@@ -1,7 +1,6 @@
 package clean.tetris;
 
 import static org.junit.Assert.*;
-
 import org.junit.*;
 
 public class ControllerTest {
@@ -12,7 +11,7 @@ public class ControllerTest {
 	@Before
 	public void setup() {
 		spyView = new ViewSpy();
-		controller = new Controller(spyView);
+		controller = new Controller(spyView, new TimerStub());
 	}
 
 	@Test

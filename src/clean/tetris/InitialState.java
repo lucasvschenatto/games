@@ -6,7 +6,7 @@ public class InitialState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
-		board.add(Tetromino.makeRandom());
+		BOARD.add(Tetromino.makeRandom());
 		return RUNNING_PIECE;
 	}
 

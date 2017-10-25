@@ -1,26 +1,18 @@
 package clean.tetris;
 
-import javax.swing.Timer;
-
-public class ConsoleGame {
+public class ConsoleGame extends Game{
 	private Controller controller;
 	private Timer timer;
 
 	public ConsoleGame() {
-		TimeListener listener = new TimeListener();
-		timer = new Timer(400, listener);
-		ConsoleView sv = new ConsoleView(timer);
-		controller = new Controller(sv);
-		sv.addKeyListener(new Keyboard(controller));
-		listener.setController(controller);
+		timer = new ConsoleTimer(50);
+		ConsoleView view = new ConsoleView();
+		controller = new Controller(view, timer);
+		timer.setController(controller);
 	}
 
-	public void start() {
+	protected void start() {
 		controller.start();
 	}
 	
-	public static void main(String[] args){
-		ConsoleGame game = new ConsoleGame();
-		game.start();
-	}
 }

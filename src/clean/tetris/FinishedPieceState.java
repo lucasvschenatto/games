@@ -6,10 +6,10 @@ public class FinishedPieceState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
-		board.freezePiece();
-		board.clearFullLines();
-		board.add(Tetromino.makeRandom());
-		return board.isGameOver()? RUNNING_PIECE: GAME_OVER;
+		BOARD.freezePiece();
+		BOARD.clearFullLines();
+		BOARD.add(Tetromino.makeRandom());
+		return BOARD.isGameOver()? GAME_OVER:RUNNING_PIECE;
 	}
 
 	@Override

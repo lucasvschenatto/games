@@ -14,6 +14,8 @@ public class Context {
 			return String.valueOf(letter);
 		}
 		
-	};
+	}
+
+	public static boolean GAME_OVER;;
 
 }

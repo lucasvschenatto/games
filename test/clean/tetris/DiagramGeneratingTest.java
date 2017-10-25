@@ -13,7 +13,7 @@ public class DiagramGeneratingTest {
 	public void test() {
 		Controller controller = new Controller();
 		controller.start();
-		new Game();
+		new SwingGame();
 		controller.stop();
 		RepositoryRecorder recorder = controller.getRecorder();
 		recorder.describeAll().forEach((record)->System.out.println(record));

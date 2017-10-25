@@ -6,16 +6,19 @@ public class Controller {
 	private boolean isPaused = false;
 	private StateBoard board;
 	private View view;
+	private Timer timer;
 
-	public Controller(View view) {
+	public Controller(View view, Timer timer) {
 		this.view = view;
-		this.board = StateBoard.make();
+		this.timer = timer;
+		this.board = StateBoard.make(this);
 	}
 
 	public void start() {
 		if (isPaused)
 			return;
 		isStarted = true;
+		timer.start();
 		view.start();
 	}
 
@@ -24,10 +27,14 @@ public class Controller {
 			return;
 		isPaused = ! isPaused;
 		
-		if (isPaused)
+		if (isPaused){
+			timer.stop();
 			view.pause();
-		else
+		}
+		else{
+			timer.start();
 			view.resume();
+		}
 	}
 
 	public void moveLeft() {
@@ -63,5 +70,11 @@ public class Controller {
 	public void next() {
 		board = board.next();
 		view.update(board.asList());
+	}
+
+	public void notifyGameOver() {
+		Context.GAME_OVER = true;
+		timer.stop();
+		view.notifyGameOver();
 	}
 }

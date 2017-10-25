@@ -4,33 +4,33 @@ public class RunningPieceState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
-		if(board.canMoveLineDown())
-			board.lineDown();
+		if(BOARD.canMoveLineDown())
+			BOARD.lineDown();
 
-		return board.canMoveLineDown()? this: FINISHED_PIECE;		
+		return BOARD.canMoveLineDown()? this: FINISHED_PIECE;		
 	}
 
 	@Override
 	public StateBoard lineDown() {
-		board.lineDown();
+		BOARD.lineDown();
 		return this;
 	}
 
 	@Override
 	public StateBoard moveLeft() {
-		board.moveLeft();
+		BOARD.moveLeft();
 		return this;
 	}
 
 	@Override
 	public StateBoard moveRight() {
-		board.moveRight();
+		BOARD.moveRight();
 		return this;
 	}
 
 	@Override
 	public StateBoard rotateLeft() {
-		board.rotateLeft();
+		BOARD.rotateLeft();
 		return this;
 	}
 

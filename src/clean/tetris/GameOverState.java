@@ -4,6 +4,7 @@ public class GameOverState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
+		CONTROLLER.notifyGameOver();
 		return this;
 	}
 
