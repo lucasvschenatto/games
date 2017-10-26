@@ -1,4 +1,4 @@
-package clean.tetris;
+package clean.tetris.board;
 
 import java.util.ArrayList;
 import java.util.List;

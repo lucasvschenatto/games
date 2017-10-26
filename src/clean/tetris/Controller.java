@@ -1,33 +1,30 @@
 package clean.tetris;
 
+import clean.tetris.board.state.StateBoard;
+
 public class Controller {
 
-	private boolean isStarted = false;
-	private boolean isPaused = false;
-	private StateBoard board;
+	private boolean paused;
+	private StateBoard boardState;
 	private View view;
 	private Timer timer;
 
 	public Controller(View view, Timer timer) {
 		this.view = view;
 		this.timer = timer;
-		this.board = StateBoard.make(this);
+		this.boardState = StateBoard.make(this);
 	}
 
 	public void start() {
-		if (isPaused)
-			return;
-		isStarted = true;
 		timer.start();
 		view.start();
 	}
 
 	public void pause() {
-		if (! isStarted)
-			return;
-		isPaused = ! isPaused;
-		
-		if (isPaused){
+		boardState = boardState.pause();
+
+		paused = ! paused;		
+		if (paused){
 			timer.stop();
 			view.pause();
 		}
@@ -35,42 +32,41 @@ public class Controller {
 			timer.start();
 			view.resume();
 		}
-		board = board.pause();
 	}
 
 	public void moveLeft() {
-		board = board.moveLeft();
-		view.update(board.asList());
+		boardState = boardState.moveLeft();
+		view.update(boardState.asList());
 	}
 
 	public void moveRight() {
-		board = board.moveRight();
-		view.update(board.asList());
+		boardState = boardState.moveRight();
+		view.update(boardState.asList());
 	}
 
 	public void rotateRight() {
-		board = board.rotateRight();
-		view.update(board.asList());		
+		boardState = boardState.rotateRight();
+		view.update(boardState.asList());		
 	}
 
 	public void rotateLeft() {
-		board = board.rotateLeft();
-		view.update(board.asList());
+		boardState = boardState.rotateLeft();
+		view.update(boardState.asList());
 	}
 
 	public void dropDown() {
-		board = board.dropDown();
-		view.update(board.asList());
+		boardState = boardState.dropDown();
+		view.update(boardState.asList());
 	}
 
 	public void lineDown() {
-		board = board.lineDown();
-		view.update(board.asList());
+		boardState = boardState.lineDown();
+		view.update(boardState.asList());
 	}
 
 	public void next() {
-		board = board.next();
-		view.update(board.asList());
+		boardState = boardState.next();
+		view.update(boardState.asList());
 	}
 
 	public void notifyGameOver() {

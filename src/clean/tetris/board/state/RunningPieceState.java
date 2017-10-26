@@ -1,13 +1,14 @@
-package clean.tetris;
+package clean.tetris.board.state;
 
 public class RunningPieceState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
-		if(BOARD.canMoveLineDown())
+		if(BOARD.canMoveLineDown()){
 			BOARD.lineDown();
-
-		return BOARD.canMoveLineDown()? this: FINISHED_PIECE;		
+			return this;
+		} else
+			return FINISHED_PIECE;		
 	}
 
 	@Override

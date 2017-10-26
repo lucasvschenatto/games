@@ -1,4 +1,4 @@
-package clean.tetris;
+package clean.tetris.board.state;
 
 public class PausedState extends StateBoard {
 

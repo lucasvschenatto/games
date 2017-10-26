@@ -11,8 +11,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import clean.tetris.Board;
 import clean.tetris.Context;
+import clean.tetris.board.Board;
 
 public class TetrisJPanel extends JPanel{
 	private static final long serialVersionUID = 176803555182914844L;

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 import org.junit.*;
 
+import clean.tetris.board.Board;
 import clean.tetris.tetromino.*;
 
 import static clean.tetris.Context.Code.*;

@@ -1,6 +1,9 @@
-package clean.tetris;
+package clean.tetris.board.state;
 
 import java.util.List;
+
+import clean.tetris.Controller;
+import clean.tetris.board.Board;
 
 public abstract class StateBoard {
 	protected static Board BOARD;
