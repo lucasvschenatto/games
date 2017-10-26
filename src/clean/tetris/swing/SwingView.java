@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.Timer;
 
 import clean.tetris.View;
 
@@ -14,10 +13,8 @@ public class SwingView extends JFrame implements View {
 	private static final long serialVersionUID = 1020062166016161964L;
 	private JLabel statusBar;
 	private TetrisJPanel tetrisJPanel;
-	private Timer timer;
 
-	public SwingView(Timer timer){
-    	this.timer = timer;
+	public SwingView(){
 		configureWindowAttributes();
         addStatusBar();
         tetrisJPanel = new TetrisJPanel();
@@ -42,21 +39,18 @@ public class SwingView extends JFrame implements View {
 
 	@Override
 	public void pause() {
-		timer.stop();
 		statusBar.setText("paused");
 	}
 
 	@Override
 	public void notifyGameOver() {
 		statusBar.setText("Game Over");
-		timer.stop();
 	}
 
 	@Override
 	public void start() {
 		setLocationRelativeTo(null);
 	    setVisible(true);
-	    timer.start();
 	}
 
 	@Override
@@ -66,7 +60,7 @@ public class SwingView extends JFrame implements View {
 
 	@Override
 	public void resume() {
-		timer.start();
+		statusBar.setText(null);
 	}
 
 }
