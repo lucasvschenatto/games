@@ -196,7 +196,6 @@ public class BoardTest {
 	@Test
 	public void whenPieceIsNotOnTopIsNotGameOver() throws Exception {
 		Board board = new Board().add(new SquareShape()).dropDown();
-		print(board);
 		assertFalse(board.isGameOver());
 	}
 	

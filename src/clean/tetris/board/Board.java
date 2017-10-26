@@ -3,6 +3,7 @@ package clean.tetris.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import clean.tetris.GridUtils;
 import clean.tetris.tetromino.Tetromino;
 
 import static clean.tetris.Context.Code.EMPTY;
@@ -108,7 +109,7 @@ public class Board {
 
 	private void addEmptyLinesOnTop() {
 		while(grid.size() < getHeight())
-			grid.add(0,makeEmptyLine());
+			grid.add(0, GridUtils.makeEmptyLine(getWidth()));
 	}
 
 	private boolean canMove(int distanceX, int distanceY) {
@@ -157,29 +158,11 @@ public class Board {
 		return lineIndex >= 0 && lineIndex < grid.size();
 	}
 
-	private String makeEmptyLine() {
-		String line = new String();
-		for (int i = 0; i < getWidth(); i++)
-			line = line.concat(String.valueOf(EMPTY));
-		return line;
-	}
-
-
 	private void overlapLetterOnGrid(ArrayList<String> targetGrid, char letter, int[] square) {
 		int lineIndex = getLineIndex(square);
 		int charIndex = getCharIndex(square);
-
-		String line = targetGrid.get(lineIndex);
-		String lineWithLetter = overlapLetterOnLine(letter, line, charIndex);
-
-		targetGrid.set(lineIndex, lineWithLetter);
-	}
-
-	private String overlapLetterOnLine(char letter, String line, int charIndex) {
-		String prefix = line.substring(0, charIndex);
-		String sufix = line.substring(charIndex + 1);
-
-		return prefix.concat(String.valueOf(letter).concat(sufix));
+		
+		GridUtils.overlapLetterOnGrid(targetGrid, letter, lineIndex, charIndex);
 	}
 
 	private ArrayList<String> overlapShapeOnClonedGrid() {

@@ -8,7 +8,7 @@ public class RunningPieceState extends StateBoard {
 			BOARD.lineDown();
 			return this;
 		} else
-			return FINISHED_PIECE;		
+			return FINISHED_TETROMINO;		
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class RunningPieceState extends StateBoard {
 	@Override
 	public StateBoard dropDown() {
 		BOARD.dropDown();
-		return FINISHED_PIECE;
+		return FINISHED_TETROMINO;
 	}
 
 }

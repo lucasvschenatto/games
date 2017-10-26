@@ -1,7 +1,11 @@
 package clean.tetris.tetromino;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+
+import clean.tetris.GridUtils;
 
 public abstract class Tetromino {
 	public static Tetromino getNullShape() {
@@ -36,6 +40,18 @@ public abstract class Tetromino {
 
 	protected Tetromino(LinkedList<int[][]> states) {
 		this.states = states;
+	}
+	
+	public List<String> asList(){
+		List<String> asList = new ArrayList<String>();
+		for(int i = 0; i<4;i++)
+			asList.add(GridUtils.makeEmptyLine(3));
+		for(int[] square: getSquares()){
+			int lineIndex = square[1]  +  initialYSlack();
+			int charIndex = square[0]  + 1;
+			GridUtils.overlapLetterOnGrid(asList, getCode(), lineIndex, charIndex);
+		}
+		return asList;
 	}
 
 	public Tetromino clone() {

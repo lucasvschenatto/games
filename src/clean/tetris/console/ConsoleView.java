@@ -8,15 +8,12 @@ import clean.tetris.View;
 public class ConsoleView implements View {
 
 	@Override
-	public void update(List<String> board) {
-		for(String line: board)
-			System.out.println(line);
+	public void updateBoard(List<String> board) {
+		print(board);
 		printSeparator();
 	}
 
-	private void printSeparator() {
-		System.out.println("####################");
-	}
+
 
 	@Override
 	public void pause() {
@@ -39,6 +36,21 @@ public class ConsoleView implements View {
 	@Override
 	public void resume() {
 		System.out.println("Resume");
+	}
+
+	@Override
+	public void updateWaitingPiece(List<String> waitingPiece) {
+		print(waitingPiece);
+		printSeparator();
+	}
+	
+	private void print(List<String> board) {
+		for(String line: board)
+			System.out.println(line);
+	}
+	
+	private void printSeparator() {
+		System.out.println("####################");
 	}
 
 }

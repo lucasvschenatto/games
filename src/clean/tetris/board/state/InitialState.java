@@ -1,13 +1,12 @@
 package clean.tetris.board.state;
 
-import clean.tetris.tetromino.Tetromino;
-
 public class InitialState extends StateBoard {
 
 	@Override
-	public StateBoard next() {
-		BOARD.add(Tetromino.makeRandom());
-		return RUNNING_PIECE;
+	public StateBoard next() { 
+		BOARD.add(reloadTetromino());
+		CONTROLLER.newWaitingTetromino();
+		return RUNNING_TETROMINO;
 	}
 
 	@Override

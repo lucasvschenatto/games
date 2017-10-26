@@ -1,15 +1,14 @@
 package clean.tetris.board.state;
 
-import clean.tetris.tetromino.Tetromino;
-
 public class FinishedPieceState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
 		BOARD.freezePiece();
 		BOARD.clearFullLines();
-		BOARD.add(Tetromino.makeRandom());
-		return BOARD.isGameOver()? GAME_OVER:RUNNING_PIECE;
+		BOARD.add(reloadTetromino());
+		CONTROLLER.newWaitingTetromino();
+		return BOARD.isGameOver()? GAME_OVER:RUNNING_TETROMINO;
 	}
 
 	@Override

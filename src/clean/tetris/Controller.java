@@ -5,14 +5,14 @@ import clean.tetris.board.state.StateBoard;
 public class Controller {
 
 	private boolean paused;
-	private StateBoard boardState;
+	private StateBoard stateBoard;
 	private View view;
 	private Timer timer;
 
 	public Controller(View view, Timer timer) {
 		this.view = view;
 		this.timer = timer;
-		this.boardState = StateBoard.make(this);
+		this.stateBoard = StateBoard.start(this);
 	}
 
 	public void start() {
@@ -21,7 +21,7 @@ public class Controller {
 	}
 
 	public void pause() {
-		boardState = boardState.pause();
+		stateBoard = stateBoard.pause();
 
 		paused = ! paused;		
 		if (paused){
@@ -35,43 +35,47 @@ public class Controller {
 	}
 
 	public void moveLeft() {
-		boardState = boardState.moveLeft();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.moveLeft();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void moveRight() {
-		boardState = boardState.moveRight();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.moveRight();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void rotateRight() {
-		boardState = boardState.rotateRight();
-		view.update(boardState.asList());		
+		stateBoard = stateBoard.rotateRight();
+		view.updateBoard(stateBoard.getBoard());		
 	}
 
 	public void rotateLeft() {
-		boardState = boardState.rotateLeft();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.rotateLeft();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void dropDown() {
-		boardState = boardState.dropDown();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.dropDown();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void lineDown() {
-		boardState = boardState.lineDown();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.lineDown();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void next() {
-		boardState = boardState.next();
-		view.update(boardState.asList());
+		stateBoard = stateBoard.next();
+		view.updateBoard(stateBoard.getBoard());
 	}
 
 	public void notifyGameOver() {
 		Context.GAME_OVER = true;
 		timer.stop();
 		view.notifyGameOver();
+	}
+
+	public void newWaitingTetromino() {
+		view.updateWaitingPiece(stateBoard.getWaitingPiece());
 	}
 }

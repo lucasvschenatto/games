@@ -56,7 +56,7 @@ public class SwingView extends JFrame implements View {
 	}
 
 	@Override
-	public void update(List<String> board) {
+	public void updateBoard(List<String> board) {
 		tetrisJPanel.repaintBoard(board);
 	}
 
@@ -69,6 +69,12 @@ public class SwingView extends JFrame implements View {
 	public void addKeyListener(KeyListener listener){
 //		super.addKeyListener(listener);
 		tetrisJPanel.addKeyListener(listener);
+	}
+
+	@Override
+	public void updateWaitingPiece(List<String> waitingPiece) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

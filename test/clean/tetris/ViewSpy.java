@@ -35,7 +35,13 @@ class ViewSpy implements View {
 	}
 
 	@Override
-	public void update(List<String> board) {
+	public void updateBoard(List<String> board) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateWaitingPiece(List<String> waitingPiece) {
 		// TODO Auto-generated method stub
 		
 	}
