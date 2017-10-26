@@ -35,6 +35,7 @@ public class Controller {
 			timer.start();
 			view.resume();
 		}
+		board = board.pause();
 	}
 
 	public void moveLeft() {

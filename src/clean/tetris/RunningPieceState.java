@@ -36,13 +36,13 @@ public class RunningPieceState extends StateBoard {
 
 	@Override
 	public StateBoard rotateRight() {
-		rotateRight();
+		BOARD.rotateRight();
 		return this;
 	}
 
 	@Override
 	public StateBoard dropDown() {
-		dropDown();
+		BOARD.dropDown();
 		return FINISHED_PIECE;
 	}
 

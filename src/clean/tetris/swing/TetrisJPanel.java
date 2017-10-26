@@ -3,6 +3,7 @@ package clean.tetris.swing;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,39 +53,34 @@ public class TetrisJPanel extends JPanel{
                 if (board.get(height).charAt(width) != Context.Code.EMPTY.letter)
                     drawSquare(g,
                     		width * squareWidth(),
-                    		boardTop + height * squareHeight(),
+                    		height * squareHeight(),
                     		colorMapping.get(Character.valueOf(board.get(height).charAt(width))));
     }
     
     private void drawSquare(Graphics g, int x, int y, Color color){
-        drawLeftUpperLines(g, x, y, color);        
-        drawLowerRightLines(g, x, y, color);
+        drawLines(g, x, y, color);
         fillRectangle(g, x, y, color);
     }
+
+	private void drawLines(Graphics g, int x, int y, Color color) {
+		Point upperLeft  = new Point(x, y);
+		Point upperRight = new Point(x + squareWidth() - 1, y);
+		
+		Point lowerLeft  = new Point(x , y + squareHeight() - 1);
+		Point lowerRight = new Point(x + squareWidth() - 1 , y + squareHeight() - 1);
+		
+		g.setColor(color.brighter());
+		g.drawLine(upperLeft.x, upperLeft.y, upperRight.x, upperRight.y);
+		g.drawLine(upperLeft.x, upperLeft.y, lowerLeft.x, lowerLeft.y);
+		
+		g.setColor(color.darker());
+		g.drawLine(lowerLeft.x, lowerLeft.y, lowerRight.x, lowerRight.y);
+		g.drawLine(upperRight.x, upperRight.y, lowerRight.x, lowerRight.y);
+	}
 
 	private void fillRectangle(Graphics g, int x, int y, Color color) {
 		g.setColor(color);
         g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
-	}
-
-	private void drawLowerRightLines(Graphics g, int x, int y, Color color) {
-		g.setColor(color.darker());
-        int lowerDarkY = y + squareHeight() - 1;
-		int rightHandedDarkX = x + squareWidth() - 1;
-		
-		g.drawLine(rightHandedDarkX, y + 1,
-				rightHandedDarkX, lowerDarkY);
-		
-		g.drawLine(x + 1, lowerDarkY,
-        		rightHandedDarkX, lowerDarkY);
-	}
-
-	private void drawLeftUpperLines(Graphics g, int x, int y, Color color) {
-		g.setColor(color.brighter());
-        g.drawLine(x, y, 
-        		x, y + squareHeight() - 1);
-        g.drawLine(x, y, 
-        		x + squareWidth() - 1, y);
 	}
 
 	public void repaintBoard(List<String> board) {

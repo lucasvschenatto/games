@@ -9,6 +9,7 @@ public abstract class StateBoard {
 	protected static StateBoard GAME_OVER;
 	protected static StateBoard INITIAL;
 	protected static StateBoard RUNNING_PIECE;
+	protected static PausedState PAUSED;	
 
 	public static StateBoard make(Controller controller) {
 		CONTROLLER = controller;
@@ -16,6 +17,7 @@ public abstract class StateBoard {
 		INITIAL = new InitialState();
 		RUNNING_PIECE = new RunningPieceState();
 		FINISHED_PIECE = new FinishedPieceState();
+		PAUSED = new PausedState();
 		GAME_OVER = new GameOverState();
 		return INITIAL;
 	}
@@ -27,6 +29,11 @@ public abstract class StateBoard {
 		return BOARD.asList();
 	}
 
+	public StateBoard pause(){
+		PAUSED.setPrevious(this);
+		return PAUSED;
+	}
+
 	public abstract StateBoard dropDown();
 
 	public abstract StateBoard lineDown();
@@ -36,8 +43,8 @@ public abstract class StateBoard {
 	public abstract StateBoard moveRight();
 
 	public abstract StateBoard next();
-
+	
 	public abstract StateBoard rotateLeft();
 
-	public abstract StateBoard rotateRight();
+	public abstract StateBoard rotateRight();;
 }

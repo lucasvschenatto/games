@@ -1,6 +1,7 @@
 package clean.tetris.swing;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -28,7 +29,7 @@ public class SwingView extends JFrame implements View {
 	}
 
 	private void addStatusBar() {
-		statusBar = new JLabel(" 0");
+		statusBar = new JLabel();
         add(statusBar, BorderLayout.SOUTH);
 	}
 
@@ -44,6 +45,7 @@ public class SwingView extends JFrame implements View {
 
 	@Override
 	public void notifyGameOver() {
+		System.out.println("Game Over");
 		statusBar.setText("Game Over");
 	}
 
@@ -61,6 +63,12 @@ public class SwingView extends JFrame implements View {
 	@Override
 	public void resume() {
 		statusBar.setText(null);
+	}
+	
+	@Override
+	public void addKeyListener(KeyListener listener){
+//		super.addKeyListener(listener);
+		tetrisJPanel.addKeyListener(listener);
 	}
 
 }
