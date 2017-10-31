@@ -4,17 +4,16 @@ public class RunningPieceState extends StateBoard {
 
 	@Override
 	public StateBoard next() {
-		if(BOARD.canMoveLineDown()){
-			BOARD.lineDown();
-			return this;
-		} else
-			return FINISHED_TETROMINO;		
+		return lineDown();
 	}
 
 	@Override
 	public StateBoard lineDown() {
-		BOARD.lineDown();
-		return this;
+		if(BOARD.canMoveLineDown()){
+			BOARD.lineDown();
+			return this;
+		} else
+			return FINISHED_TETROMINO;	
 	}
 
 	@Override

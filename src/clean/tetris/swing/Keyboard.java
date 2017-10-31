@@ -27,7 +27,7 @@ class Keyboard extends KeyAdapter {
              controller.moveRight();
              return;
          case KeyEvent.VK_UP:
-             controller.rotateLeft();
+             controller.rotateRight();
              return;
          case KeyEvent.VK_DOWN:
         	 controller.lineDown();

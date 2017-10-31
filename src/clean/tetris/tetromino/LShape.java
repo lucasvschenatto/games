@@ -14,7 +14,8 @@ public class LShape extends Tetromino{
 		states.add(new int[][]{ { 1, 1 },  { 0, 1 },  { 0, 0 },   { 0, -1 } } );
 		states.add(new int[][]{ { -1, 1 }, { -1, 0 }, { 0, 0 }, { 1, 0 } } );
 		states.add(new int[][]{ { -1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } } );
-		states.add(new int[][]{ { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } } );
+		states.add(new int[][]{ { 1, -1 }, { -1, 0 }, { 0, 0 }, { 1, 0 } } );
+//		states.add(new int[][]{ { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } } );
 		return states;
 	}
 
